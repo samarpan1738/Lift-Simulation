@@ -1,0 +1,117 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+body {
+	font-family: "Poppins", sans-serif;
+}
+.floor {
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid black;
+	margin-bottom: 1rem;
+	align-items: center;
+	padding: 0.5rem 0.5rem;
+	height: 8.5rem;
+}
+.form-container {
+	display: flex;
+	justify-content: center;
+}
+#floor-plan-form {
+	width: 300px;
+}
+#floor-plan-form > button {
+	width: 100%;
+	padding: 0.25rem 0;
+}
+.input-group {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1rem;
+}
+.input-group > input {
+	padding: 0.5rem 0.5rem;
+}
+.input-group > label {
+	margin-bottom: 0.5rem;
+}
+.lift-section {
+	flex: 1;
+	display: flex;
+	justify-content: space-between;
+	margin: 0 2rem;
+	height: 100%;
+}
+
+.lift {
+	position: absolute;
+	/* left: 100px; */
+	bottom: 7px;
+
+	width: 6.25rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid black;
+	height: 7.5rem;
+	transform-origin: center;
+	transition: transform 5s ease-in-out;
+	overflow-x: hidden;
+}
+.button-container {
+	display: flex;
+	flex-direction: column;
+}
+.button-container > button:first-of-type {
+	margin-bottom: 10px;
+}
+.button-container > button[data-state="on"]{
+	color: white;
+	background-color: orange;
+}
+
+#plot {
+	margin-top: 1rem;
+	position: relative;
+}
+.lift-door {
+	display: flex;
+	flex: 1;
+	background-color: black;
+	height: 100%;
+	width: 100%;
+	border: 1px solid white;
+	/* transition: transform 1s ease-in-out; */
+}
+.lift-door-left {
+	animation: left-door-open-close 5s ease-in-out forwards;
+}
+.lift-door-right {
+	animation: right-door-open-close 5s ease-in-out forwards;
+}
+@keyframes left-door-open-close {
+	50% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(0%);
+	}
+}
+@keyframes right-door-open-close {
+	50% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: translateX(0%);
+	}
+}
+
+@media screen and (max-width: 600px) {
+	html {
+	  background-color: lightblue;
+	  font-size: 14px;
+	}
+  }
