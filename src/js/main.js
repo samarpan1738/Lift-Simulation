@@ -66,12 +66,15 @@ function validateFloorPlanFormData(fd) {
 	}
 	return true;
 }
-
-function setupFloorAndLifts(floorCount, liftCount) {
-	const fragment = document.createDocumentFragment();
+function resetState() {
 	liftNumberToState = {};
 	floorToLifts = {};
 	queue = [];
+	freeLifts = new Set();
+}
+function setupFloorAndLifts(floorCount, liftCount) {
+	const fragment = document.createDocumentFragment();
+	resetState();
 	let firstFloor = null;
 	for (let floorNumber = floorCount; floorNumber >= 1; --floorNumber) {
 		const floor = createFloor(floorNumber, floorCount, liftCount);
@@ -143,7 +146,7 @@ function handleLiftButtonClick(liftButton, floor, floorNumber, totalLifts, direc
 	if (floorToLifts[floorNumber] && floorToLifts[floorNumber].length > 0) {
 		const liftNumber = floorToLifts[floorNumber][0];
 		if (liftNumberToState[liftNumber].state !== LIFT_STATE.FREE) return;
-		liftButton.dataset.state=BUTTON_STATE.ON;
+		liftButton.dataset.state = BUTTON_STATE.ON;
 		addDoorAnimation(getLiftByNumber(floorToLifts[floorNumber][0]));
 		return;
 	}
