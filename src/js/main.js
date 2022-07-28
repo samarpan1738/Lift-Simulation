@@ -231,7 +231,7 @@ function createLift(liftNumber) {
 	};
 	lift.ontransitionend = () => {
 		console.log("Add open-close animation");
-		addDoorAnimation(lift);
+		if (liftNumberToState[liftNumber].state === LIFT_STATE.BUSY) addDoorAnimation(lift);
 	};
 	return lift;
 }
