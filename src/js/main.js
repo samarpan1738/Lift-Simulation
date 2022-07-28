@@ -21,6 +21,7 @@ let floorToLifts = null;
 let queue = null;
 let DISTANCE_BETWEEN_TWO_FLOORS = null;
 const POLLING_INTERVAL_IN_MS = 1000;
+let BASE_FONT_SIZE = null;
 let TOTAL_FLOORS = 0,
 	TOTAL_LIFTS = 0;
 let freeLifts = new Set();
@@ -68,11 +69,12 @@ function validateFloorPlanFormData(fd) {
 }
 function resetState() {
 	liftNumberToState = {};
-	floorToLifts = {};
+	floorToLifts = { 1: [] };
 	queue = [];
 	freeLifts = new Set();
 }
 function setupFloorAndLifts(floorCount, liftCount) {
+	BASE_FONT_SIZE = parseInt(getComputedStyle(document.querySelector("body")).fontSize);
 	const fragment = document.createDocumentFragment();
 	resetState();
 	let firstFloor = null;
@@ -84,15 +86,15 @@ function setupFloorAndLifts(floorCount, liftCount) {
 	console.log(firstFloor.getElementsByClassName(CLASSNAMES.LIFT_SECTION).item(0));
 	for (let liftNumber = 1; liftNumber <= liftCount; ++liftNumber) {
 		freeLifts.add(liftNumber);
+		floorToLifts[1].push(liftNumber);
 		firstFloor.getElementsByClassName(CLASSNAMES.LIFT_SECTION).item(0).appendChild(createLift(liftNumber));
 	}
 	plot.innerHTML = "";
 	plot.appendChild(fragment);
-	const baseFs = parseInt(getComputedStyle(document.querySelector("body")).fontSize);
 	DISTANCE_BETWEEN_TWO_FLOORS =
 		(document.querySelector(`.floor[data-number="1"]`).getBoundingClientRect().y -
 			document.querySelector(`.floor[data-number="2"]`).getBoundingClientRect().y) /
-		baseFs;
+		BASE_FONT_SIZE;
 	console.log(`DISTANCE_BETWEEN_TWO_FLOORS : ${DISTANCE_BETWEEN_TWO_FLOORS}`);
 }
 
@@ -223,7 +225,7 @@ function createLift(liftNumber) {
 	lift.classList.add("lift");
 	lift.id = `lift-${liftNumber}`;
 	addLiftDoors(lift, liftNumber);
-	lift.style.left = `${140 * liftNumber}px`;
+	lift.style.left = `${5 + (6.25 + 2) * (liftNumber - 1)}rem`;
 	liftNumberToState[liftNumber] = {
 		currentFloor: 1,
 		state: LIFT_STATE.FREE,
